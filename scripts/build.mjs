@@ -115,7 +115,9 @@ for (const category of CATEGORIES) {
     }
 
     const upstreamPath = `skills/${category}/${dir}`;
-    const homepage = `${UPSTREAM_URL}/tree/${upstreamSha.slice(0, 7)}/${upstreamPath}`;
+    // Link to upstream main (a fork commit sha would 404 on the upstream repo);
+    // the exact upstream commit is recorded in state.json and the changelog.
+    const homepage = `${UPSTREAM_URL}/tree/main/${upstreamPath}`;
     const description = data.description ?? '';
 
     const outDir = join(distDir, 'skills', category, dir);
@@ -125,7 +127,7 @@ for (const category of CATEGORIES) {
     // embedded in SKILL.md instead — still satisfies MIT's notice requirement.
     const notice =
       `> **Mirror notice:** This skill is mirrored from [${UPSTREAM_REPO} · ${upstreamPath}](${homepage}) ` +
-      `at commit \`${String(upstreamSha).slice(0, 7)}\` (MIT License, see the License section at the end of this file). ` +
+      `(built from upstream commit \`${String(upstreamSha).slice(0, 7)}\`, MIT License — see the License section at the end of this file). ` +
       `由 SkillHub 社区搬运,非作者官方维护;更新与反馈请见上游仓库。此镜像由 @jaredshuai 维护。\n`;
 
     const fm =
@@ -152,7 +154,7 @@ for (const category of CATEGORIES) {
 
 rows.sort((a, b) => (a.slug < b.slug ? -1 : 1));
 const table = rows
-  .map((r) => `| ${r.slug} | ${r.version} | ${r.category} | [${r.upstreamPath}](${UPSTREAM_URL}/tree/${String(upstreamSha).slice(0, 7)}/${r.upstreamPath}) |`)
+  .map((r) => `| ${r.slug} | ${r.version} | ${r.category} | [${r.upstreamPath}](${UPSTREAM_URL}/tree/main/${r.upstreamPath}) |`)
   .join('\n');
 writeFileSync(
   join(distDir, 'README.md'),
