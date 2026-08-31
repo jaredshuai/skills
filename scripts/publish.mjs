@@ -38,6 +38,18 @@ if (login.status !== 0) {
 }
 
 const changelog = `sync upstream ${String(state.upstreamSha).slice(0, 7)}`;
+const VERSION_EXISTS = /已存在|already exists|版本冲突|409/;
+const RATE_LIMITED = /频繁|429|rate.?limit/i;
+
+function bumpPatch(v) {
+  const m = /^(\d+)\.(\d+)\.(\d+)$/.exec(String(v));
+  return m ? `${m[1]}.${m[2]}.${Number(m[3]) + 1}` : String(v);
+}
+function setSfVersion(sfPath, version) {
+  const text = readFileSync(sfPath, 'utf8');
+  writeFileSync(sfPath, text.replace(/^version: .*$/m, `version: ${version}`));
+}
+
 let published = 0;
 let failed = 0;
 let skipped = 0;
@@ -48,23 +60,36 @@ for (const [slug, s] of Object.entries(state.skills)) {
     continue;
   }
   const dir = join(dist, 'skills', s.category, s.dir);
-  const args = ['publish', dir];
-  if (dryRun) args.push('--dry-run');
-  args.push('--changelog', changelog);
-  const r = run(args);
-  const out = ((r.stdout || '') + (r.stderr || '')).trim();
-  if (r.status === 0) {
-    published++;
-    if (!dryRun) {
-      s.publishedHash = s.hash;
-      s.publishedVersion = s.version;
+  let ok = false;
+  for (let attempt = 1; attempt <= 6 && !ok; attempt++) {
+    const args = ['publish', dir];
+    if (dryRun) args.push('--dry-run');
+    args.push('--changelog', changelog);
+    const r = run(args);
+    const out = ((r.stdout || '') + (r.stderr || '')).trim();
+    if (r.status === 0) {
+      ok = true;
+      published++;
+      if (!dryRun) {
+        s.publishedHash = s.hash;
+        s.publishedVersion = s.version;
+      }
+      console.log(`ok  ${slug} -> ${s.version}${dryRun ? ' (dry run)' : ''}`);
+    } else if (VERSION_EXISTS.test(out)) {
+      // that version is already taken (e.g. earlier partial run) - bump and retry
+      s.version = bumpPatch(s.version);
+      setSfVersion(join(dir, 'SKILL.md'), s.version);
+      console.log(`... ${slug}: version taken, retrying as ${s.version}`);
+    } else if (RATE_LIMITED.test(out) && attempt < 6) {
+      console.log(`... ${slug}: rate limited, waiting 70s (attempt ${attempt})`);
+      await sleep(70000);
+    } else {
+      failed++;
+      console.error(`FAIL ${slug} (exit ${r.status}):\n${out}\n`);
+      break;
     }
-    console.log(`ok  ${slug} -> ${s.version}${dryRun ? ' (dry run)' : ''}`);
-  } else {
-    failed++;
-    console.error(`FAIL ${slug} (exit ${r.status}):\n${out}\n`);
   }
-  if (!dryRun) await sleep(3000); // be gentle with the review queue and rate limits
+  if (!dryRun) await sleep(15000); // real publishes are rate limited much harder than dry runs
 }
 
 writeFileSync(statePath, JSON.stringify(state, null, 2));

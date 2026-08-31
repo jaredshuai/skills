@@ -38,15 +38,18 @@ jobs:
         continue-on-error: true
 
       - name: Build artifacts
+        id: build
         run: node scripts/build.mjs dist state-dir
 
       - name: Publish changed skills
+        id: publish
         env:
           SKILLHUB_TOKEN: ${{ secrets.SKILLHUB_TOKEN }}
           DRY_RUN: ${{ inputs.dry_run == true && '1' || '' }}
         run: node scripts/publish.mjs dist
 
       - name: Push skillhub branch
+        if: always() && steps.build.outcome == 'success'
         env:
           GH_TOKEN: ${{ github.token }}
         run: bash scripts/push-branch.sh
