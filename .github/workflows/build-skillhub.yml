@@ -10,6 +10,9 @@ on:
   workflow_run:
     workflows: ["Sync upstream"]
     types: [completed]
+  schedule:
+    - cron: "40 * * * *" # hourly catch-up: resumes publish if a run stopped early on rate limit.
+        # Safe to remove once the initial mirror has fully drained.
   workflow_dispatch:
     inputs:
       dry_run:

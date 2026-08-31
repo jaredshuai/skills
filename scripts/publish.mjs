@@ -1,6 +1,14 @@
 #!/usr/bin/env node
 // Publishes skills whose content changed since the last successful publish,
 // using the SkillHub CLI. Requires SKILLHUB_TOKEN; DRY_RUN=1 for preflight.
+//
+// Platform realities this script works around:
+// - real publishes are rate limited per rolling window (dry runs are not);
+//   after ~10 publishes in a short burst the quota drains, so the script
+//   waits 70s between retries and STOPS EARLY (exit 0, state saved) when the
+//   quota looks exhausted — the next scheduled run resumes the remainder.
+// - a "version already exists" error means an earlier partial run took that
+//   version; the script bumps the patch version in SKILL.md and retries.
 // Usage: node scripts/publish.mjs <dist-dir>
 import { readFileSync, writeFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
@@ -17,12 +25,12 @@ if (!token) {
   process.exit(0);
 }
 
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const env = {
   ...process.env,
   PATH: `${process.env.HOME ?? ''}/.local/bin:${process.env.PATH ?? ''}`,
 };
 const run = (args) => spawnSync('skillhub', args, { encoding: 'utf8', env, shell: process.platform === 'win32' });
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 if (run(['--version']).status !== 0) {
   console.log('installing skillhub CLI...');
@@ -46,22 +54,24 @@ function bumpPatch(v) {
   return m ? `${m[1]}.${m[2]}.${Number(m[3]) + 1}` : String(v);
 }
 function setSfVersion(sfPath, version) {
-  const text = readFileSync(sfPath, 'utf8');
-  writeFileSync(sfPath, text.replace(/^version: .*$/m, `version: ${version}`));
+  writeFileSync(sfPath, readFileSync(sfPath, 'utf8').replace(/^version: .*$/m, `version: ${version}`));
 }
+const persist = () => writeFileSync(statePath, JSON.stringify(state, null, 2));
 
 let published = 0;
 let failed = 0;
 let skipped = 0;
+let quotaStop = false;
 
-for (const [slug, s] of Object.entries(state.skills)) {
+outer: for (const [slug, s] of Object.entries(state.skills)) {
   if (s.hash === s.publishedHash) {
     skipped++;
     continue;
   }
   const dir = join(dist, 'skills', s.category, s.dir);
+  let rateWaits = 0;
   let ok = false;
-  for (let attempt = 1; attempt <= 6 && !ok; attempt++) {
+  for (let attempt = 1; attempt <= 8 && !ok; attempt++) {
     const args = ['publish', dir];
     if (dryRun) args.push('--dry-run');
     args.push('--changelog', changelog);
@@ -73,14 +83,20 @@ for (const [slug, s] of Object.entries(state.skills)) {
       if (!dryRun) {
         s.publishedHash = s.hash;
         s.publishedVersion = s.version;
+        persist(); // save immediately so an early stop never republishes successes
       }
       console.log(`ok  ${slug} -> ${s.version}${dryRun ? ' (dry run)' : ''}`);
     } else if (VERSION_EXISTS.test(out)) {
-      // that version is already taken (e.g. earlier partial run) - bump and retry
       s.version = bumpPatch(s.version);
       setSfVersion(join(dir, 'SKILL.md'), s.version);
       console.log(`... ${slug}: version taken, retrying as ${s.version}`);
-    } else if (RATE_LIMITED.test(out) && attempt < 6) {
+    } else if (RATE_LIMITED.test(out)) {
+      rateWaits++;
+      if (rateWaits >= 3) {
+        quotaStop = true;
+        console.log(`... ${slug}: still rate limited after repeated waits - publish quota likely drained. Stopping early; state is saved and the next scheduled run resumes.`);
+        break outer;
+      }
       console.log(`... ${slug}: rate limited, waiting 70s (attempt ${attempt})`);
       await sleep(70000);
     } else {
@@ -89,9 +105,10 @@ for (const [slug, s] of Object.entries(state.skills)) {
       break;
     }
   }
-  if (!dryRun) await sleep(15000); // real publishes are rate limited much harder than dry runs
+  if (!ok && !quotaStop) failed++;
+  if (!dryRun && !quotaStop) await sleep(15000);
 }
 
-writeFileSync(statePath, JSON.stringify(state, null, 2));
-console.log(`done: ${published} published, ${failed} failed, ${skipped} unchanged${dryRun ? ' (dry run, state not updated)' : ''}`);
-process.exit(failed ? 1 : 0);
+persist();
+console.log(`done: ${published} published, ${failed} failed, ${skipped} unchanged${dryRun ? ' (dry run, state not updated)' : ''}${quotaStop ? ' [stopped early: rate limit]' : ''}`);
+process.exit(failed > 0 ? 1 : 0);
