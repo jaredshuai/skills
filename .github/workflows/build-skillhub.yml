@@ -1,0 +1,52 @@
+name: Build skillhub branch
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "skills/**"
+      - "scripts/**"
+      - ".github/workflows/build-skillhub.yml"
+  workflow_run:
+    workflows: ["Sync upstream"]
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Preflight only (build + dry-run publish, no real publish)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-skillhub
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch previous state (skillhub branch)
+        uses: actions/checkout@v4
+        with:
+          ref: skillhub
+          path: state-dir
+        continue-on-error: true
+
+      - name: Build artifacts
+        run: node scripts/build.mjs dist state-dir
+
+      - name: Publish changed skills
+        env:
+          SKILLHUB_TOKEN: ${{ secrets.SKILLHUB_TOKEN }}
+          DRY_RUN: ${{ inputs.dry_run == true && '1' || '' }}
+        run: node scripts/publish.mjs dist
+
+      - name: Push skillhub branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: bash scripts/push-branch.sh
