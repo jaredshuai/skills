@@ -121,11 +121,11 @@ for (const category of CATEGORIES) {
     const outDir = join(distDir, 'skills', category, dir);
     mkdirSync(outDir, { recursive: true });
     cpSync(skillDir, outDir, { recursive: true });
-    writeFileSync(join(outDir, 'LICENSE'), license);
-
+    // SkillHub rejects LICENSE files ("不允许的文件类型"), so the MIT text is
+    // embedded in SKILL.md instead — still satisfies MIT's notice requirement.
     const notice =
       `> **Mirror notice:** This skill is mirrored from [${UPSTREAM_REPO} · ${upstreamPath}](${homepage}) ` +
-      `at commit \`${String(upstreamSha).slice(0, 7)}\` (MIT License, see LICENSE). ` +
+      `at commit \`${String(upstreamSha).slice(0, 7)}\` (MIT License, see the License section at the end of this file). ` +
       `由 SkillHub 社区搬运,非作者官方维护;更新与反馈请见上游仓库。此镜像由 @jaredshuai 维护。\n`;
 
     const fm =
@@ -140,7 +140,10 @@ for (const category of CATEGORIES) {
       `homepage: ${yamlStr(homepage)}\n` +
       `tags: [mattpocock, mirror, ${category}]\n` +
       `---\n\n`;
-    writeFileSync(join(outDir, 'SKILL.md'), fm + notice + '\n' + body.replace(/^\s+/, ''));
+    writeFileSync(
+      join(outDir, 'SKILL.md'),
+      fm + notice + '\n' + body.replace(/^\s+/, '').replace(/\s+$/, '') + '\n\n---\n\n## License\n\n' + license.trim() + '\n',
+    );
 
     out.skills[slug] = { hash, version, changed, category, dir, upstreamPath };
     rows.push({ slug, name, category, version, changed, upstreamPath });
