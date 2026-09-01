@@ -147,7 +147,18 @@ for (const category of CATEGORIES) {
       fm + notice + '\n' + body.replace(/^\s+/, '').replace(/\s+$/, '') + '\n\n---\n\n## License\n\n' + license.trim() + '\n',
     );
 
-    out.skills[slug] = { hash, version, changed, category, dir, upstreamPath };
+    out.skills[slug] = {
+      hash,
+      version,
+      changed,
+      category,
+      dir,
+      upstreamPath,
+      // carry over publish bookkeeping - without this every build would look
+      // unpublished and the next run would republish everything
+      ...(prev?.publishedHash ? { publishedHash: prev.publishedHash } : {}),
+      ...(prev?.publishedVersion ? { publishedVersion: prev.publishedVersion } : {}),
+    };
     rows.push({ slug, name, category, version, changed, upstreamPath });
   }
 }
