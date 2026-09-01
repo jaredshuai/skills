@@ -57,17 +57,23 @@ function hashDir(dir) {
   return h.digest('hex');
 }
 
-function parseVer(v) {
-  const m = /^(\d+)\.(\d+)\.(\d+)$/.exec(String(v));
-  return m ? [Number(m[1]), Number(m[2]), Number(m[3])] : [1, 0, 0];
-}
-const maxVer = (a, b) => {
-  const [pa, pb] = [parseVer(a), parseVer(b)];
-  return pa > pb ? a : b;
+// Version scheme: <upstream semver>+r<N>.
+// - never published            -> 1.2.3+r1
+// - republish, same upstream   -> +r increments (1.2.3+r1 -> 1.2.3+r2)
+// - upstream version moved     -> new era (1.2.4+r1)
+// Legacy three-segment versions from the first rollout keep working: they are
+// kept as-is while their content stays published, and the next republish
+// switches them into the +r scheme.
+const upPart = (v) => String(v).split('+')[0];
+const revOf = (v) => {
+  const m = /\+r(\d+)$/.exec(String(v));
+  return m ? Number(m[1]) : 0;
 };
-function bumpPatch(v) {
-  const [x, y, z] = parseVer(v);
-  return `${x}.${y}.${z + 1}`;
+function nextMirrorVersion(publishedVersion, upstreamVersion) {
+  if (upPart(publishedVersion) === upstreamVersion) {
+    return `${upstreamVersion}+r${revOf(publishedVersion) + 1}`;
+  }
+  return `${upstreamVersion}+r1`;
 }
 
 function loadState() {
@@ -102,17 +108,17 @@ for (const category of CATEGORIES) {
     const hash = hashDir(skillDir);
     const prev = state.skills?.[slug];
     let version;
-    let changed;
-    if (!prev) {
-      version = upstreamVersion;
-      changed = true;
-    } else if (prev.hash === hash) {
-      version = prev.version;
-      changed = false;
+    if (prev?.publishedHash && prev.publishedHash === hash) {
+      // this exact content is already live - keep its published version
+      version = prev.publishedVersion;
+    } else if (prev?.publishedVersion) {
+      // republish: bump mirror revision within the upstream era, or start a new era
+      version = nextMirrorVersion(prev.publishedVersion, upstreamVersion);
     } else {
-      version = bumpPatch(maxVer(prev.version, upstreamVersion));
-      changed = true;
+      // never published
+      version = `${upstreamVersion}+r1`;
     }
+    const changed = !prev || prev.hash !== hash;
 
     const upstreamPath = `skills/${category}/${dir}`;
     // Link to upstream main (a fork commit sha would 404 on the upstream repo);

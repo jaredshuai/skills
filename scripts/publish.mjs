@@ -45,13 +45,18 @@ if (login.status !== 0) {
   process.exit(1);
 }
 
-const changelog = `sync upstream ${String(state.upstreamSha).slice(0, 7)}`;
+const changelog = `upstream v${state.upstreamVersion}`;
 const VERSION_EXISTS = /已存在|already exists|版本冲突|409/;
 const RATE_LIMITED = /频繁|429|rate.?limit/i;
 
-function bumpPatch(v) {
-  const m = /^(\d+)\.(\d+)\.(\d+)$/.exec(String(v));
-  return m ? `${m[1]}.${m[2]}.${Number(m[3]) + 1}` : String(v);
+// version taken -> bump mirror revision (1.2.3+r4 -> 1.2.3+r5);
+// legacy three-segment versions fall back to a plain patch bump
+function bumpVersion(v) {
+  const m = /^(.*\+r)(\d+)$/.exec(String(v));
+  if (m) return `${m[1]}${Number(m[2]) + 1}`;
+  const p = /^(\d+)\.(\d+)\.(\d+)$/.exec(String(v));
+  if (p) return `${p[1]}.${p[2]}.${Number(p[3]) + 1}`;
+  return `${v}+r2`;
 }
 function setSfVersion(sfPath, version) {
   writeFileSync(sfPath, readFileSync(sfPath, 'utf8').replace(/^version: .*$/m, `version: ${version}`));
@@ -87,7 +92,7 @@ outer: for (const [slug, s] of Object.entries(state.skills)) {
       }
       console.log(`ok  ${slug} -> ${s.version}${dryRun ? ' (dry run)' : ''}`);
     } else if (VERSION_EXISTS.test(out)) {
-      s.version = bumpPatch(s.version);
+      s.version = bumpVersion(s.version);
       setSfVersion(join(dir, 'SKILL.md'), s.version);
       console.log(`... ${slug}: version taken, retrying as ${s.version}`);
     } else if (RATE_LIMITED.test(out)) {
