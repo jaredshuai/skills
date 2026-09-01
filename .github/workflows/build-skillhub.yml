@@ -34,11 +34,17 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Fetch previous state (skillhub branch)
-        uses: actions/checkout@v4
-        with:
-          ref: skillhub
-          path: state-dir
-        continue-on-error: true
+        run: |
+          set -e
+          mkdir -p state-dir
+          if git ls-remote --exit-code origin refs/heads/skillhub >/dev/null 2>&1; then
+            git fetch --no-tags --depth 1 origin skillhub
+            git archive "$(git rev-parse FETCH_HEAD)" | tar -x -C state-dir
+            test -f state-dir/state.json
+            echo "fetched previous state from skillhub branch"
+          else
+            echo "skillhub branch does not exist yet - starting with fresh state"
+          fi
 
       - name: Build artifacts
         id: build
