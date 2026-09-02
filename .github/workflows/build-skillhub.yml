@@ -11,8 +11,8 @@ on:
     workflows: ["Sync upstream"]
     types: [completed]
   schedule:
-    - cron: "40 3 * * *" # daily safety net; the mirror has fully drained (29/29 published).
-        # Push/workflow_run triggers above handle upstream syncs regardless.
+    - cron: "40 * * * *" # TEMPORARY hourly: draining the forced legacy-version republish (24 skills).
+        # Relax to daily once done - see the +r version scheme rollout.
   workflow_dispatch:
     inputs:
       dry_run:
