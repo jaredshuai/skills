@@ -25,6 +25,15 @@ if (!token) {
   process.exit(0);
 }
 
+// Decide whether there is anything to do BEFORE touching the network: idle runs
+// must stay green even when api.skillhub.cn is unreachable from the runner.
+const pending = Object.entries(state.skills).filter(([, s]) => s.hash !== s.publishedHash);
+if (pending.length === 0) {
+  console.log('nothing to publish - all skills match their published state.');
+  process.exit(0);
+}
+console.log(`${pending.length} skill(s) to publish: ${pending.map(([slug]) => slug).join(', ')}`);
+
 const env = {
   ...process.env,
   PATH: `${process.env.HOME ?? ''}/.local/bin:${process.env.PATH ?? ''}`,
