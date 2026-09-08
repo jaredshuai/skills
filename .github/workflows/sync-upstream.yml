@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write # merge-upstream API creates a merge commit on the fork
 
 jobs:
   sync:
