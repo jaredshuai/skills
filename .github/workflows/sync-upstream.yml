@@ -7,7 +7,11 @@ on:
 
 permissions:
   contents: write # merge-upstream API creates a merge commit on the fork
-  workflows: write # upstream commits may touch .github/workflows, merging those needs this
+  # NOTE: GITHUB_TOKEN can never merge commits that touch .github/workflows
+  # (GitHub hard-blocks this; the `workflows` permission key does not exist).
+  # When upstream ships workflow changes this job fails on purpose - sync once
+  # via the web "Sync fork" button (user identity has the workflow scope),
+  # which then re-triggers the build workflow automatically.
 
 jobs:
   sync:
