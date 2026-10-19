@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: write # merge-upstream API creates a merge commit on the fork
+  workflows: write # upstream commits may touch .github/workflows, merging those needs this
 
 jobs:
   sync:
