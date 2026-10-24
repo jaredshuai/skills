@@ -1,0 +1,318 @@
+{
+  "generatedAt": "2026-10-24T08:23:24.696Z",
+  "upstreamRepo": "mattpocock/skills",
+  "upstreamSha": "fb43fa6a4bb644a24eb41de35d8511ba4dc1aaa6",
+  "upstreamVersion": "1.3.1",
+  "skills": {
+    "mp-ask-matt": {
+      "hash": "99224d8d3f3c059def3e0e3f5c2b851c38dcf81ec9cdb991e01eeb4a5ae84d2e",
+      "version": "1.3.1+r2",
+      "changed": false,
+      "category": "engineering",
+      "dir": "ask-matt",
+      "upstreamPath": "skills/engineering/ask-matt",
+      "publishedHash": "99224d8d3f3c059def3e0e3f5c2b851c38dcf81ec9cdb991e01eeb4a5ae84d2e",
+      "publishedVersion": "1.3.1+r2"
+    },
+    "mp-code-review": {
+      "hash": "bb3048304e5c783c09783326a9e8f8ba55a31e810f511a792238bb8ad45a0978",
+      "version": "1.3.1+r1",
+      "changed": false,
+      "category": "engineering",
+      "dir": "code-review",
+      "upstreamPath": "skills/engineering/code-review",
+      "publishedHash": "bb3048304e5c783c09783326a9e8f8ba55a31e810f511a792238bb8ad45a0978",
+      "publishedVersion": "1.3.1+r1"
+    },
+    "mp-codebase-design": {
+      "hash": "07246bd43eadfb50ac686aee5297d2cb808bf5ad00fb2ed289416b4b79e7850c",
+      "version": "1.3.1+r1",
+      "changed": false,
+      "category": "engineering",
+      "dir": "codebase-design",
+      "upstreamPath": "skills/engineering/codebase-design",
+      "publishedHash": "07246bd43eadfb50ac686aee5297d2cb808bf5ad00fb2ed289416b4b79e7850c",
+      "publishedVersion": "1.3.1+r1"
+    },
+    "mp-diagnosing-bugs": {
+      "hash": "9b24ecaf15dd8d5594f973c590c6904d90dd3b50f8853fefd2341b7fd4a156bf",
+      "version": "1.3.1+r2",
+      "changed": false,
+      "category": "engineering",
+      "dir": "diagnosing-bugs",
+      "upstreamPath": "skills/engineering/diagnosing-bugs",
+      "publishedHash": "9b24ecaf15dd8d5594f973c590c6904d90dd3b50f8853fefd2341b7fd4a156bf",
+      "publishedVersion": "1.3.1+r2"
+    },
+    "mp-domain-modeling": {
+      "hash": "467f5e92529c2a4637440dce99841814b0864a8528714188ec91b78d900df540",
+      "version": "1.3.1+r1",
+      "changed": false,
+      "category": "engineering",
+      "dir": "domain-modeling",
+      "upstreamPath": "skills/engineering/domain-modeling",
+      "publishedHash": "467f5e92529c2a4637440dce99841814b0864a8528714188ec91b78d900df540",
+      "publishedVersion": "1.3.1+r1"
+    },
+    "mp-grill-with-docs": {
+      "hash": "9e8f732b806727978f1ad8d2fb9ce4467da68f7482d63c4bb5a73f2b1a0c797c",
+      "version": "1.2.3+r1",
+      "changed": false,
+      "category": "engineering",
+      "dir": "grill-with-docs",
+      "upstreamPath": "skills/engineering/grill-with-docs",
+      "publishedHash": "9e8f732b806727978f1ad8d2fb9ce4467da68f7482d63c4bb5a73f2b1a0c797c",
+      "publishedVersion": "1.2.3+r1"
+    },
+    "mp-implement": {
+      "hash": "c7c4d38c8dd9a05fcad046f79aeb275c7f31a87d7bceb4f3a133f125e6f4bfbb",
+      "version": "1.3.1+r1",
+      "changed": false,
+      "category": "engineering",
+      "dir": "implement",
+      "upstreamPath": "skills/engineering/implement",
+      "publishedHash": "c7c4d38c8dd9a05fcad046f79aeb275c7f31a87d7bceb4f3a133f125e6f4bfbb",
+      "publishedVersion": "1.3.1+r1"
+    },
+    "mp-implement-spec": {
+      "hash": "f5df654e389b0983a98df35bf83dced720fed5ec87436da18bcfb38ea60ecc7b",
+      "version": "1.3.1+r1",
+      "changed": false,
+      "category": "engineering",
+      "dir": "implement-spec",
+      "upstreamPath": "skills/engineering/implement-spec",
+      "publishedHash": "f5df654e389b0983a98df35bf83dced720fed5ec87436da18bcfb38ea60ecc7b",
+      "publishedVersion": "1.3.1+r1"
+    },
+    "mp-improve-codebase-architecture": {
+      "hash": "741b4015c0edbcd5ffb9c926abab6cd52946bd296af2792c4694c759f4bd2554",
+      "version": "1.3.1+r1",
+      "changed": false,
+      "category": "engineering",
+      "dir": "improve-codebase-architecture",
+      "upstreamPath": "skills/engineering/improve-codebase-architecture",
+      "publishedHash": "741b4015c0edbcd5ffb9c926abab6cd52946bd296af2792c4694c759f4bd2554",
+      "publishedVersion": "1.3.1+r1"
+    },
+    "mp-pr": {
+      "hash": "e6edd6e5d192d995ed3dd25cd279efa6c8be860b3d24aa7f0c5d5e51a0cd2d52",
+      "version": "1.3.1+r1",
+      "changed": false,
+      "category": "engineering",
+      "dir": "pr",
+      "upstreamPath": "skills/engineering/pr",
+      "publishedHash": "e6edd6e5d192d995ed3dd25cd279efa6c8be860b3d24aa7f0c5d5e51a0cd2d52",
+      "publishedVersion": "1.3.1+r1"
+    },
+    "mp-prototype": {
+      "hash": "090ae76b97353255ca29be783d69bcc1029e0195bdf43118d0b6f7ea9acc89b0",
+      "version": "1.2.3+r1",
+      "changed": false,
+      "category": "engineering",
+      "dir": "prototype",
+      "upstreamPath": "skills/engineering/prototype",
+      "publishedHash": "090ae76b97353255ca29be783d69bcc1029e0195bdf43118d0b6f7ea9acc89b0",
+      "publishedVersion": "1.2.3+r1"
+    },
+    "mp-research": {
+      "hash": "d293faf4e4da791b8046cd2eed5b4dce46f591f1a26be4099a55b968b5dbe9c9",
+      "version": "1.2.3+r1",
+      "changed": false,
+      "category": "engineering",
+      "dir": "research",
+      "upstreamPath": "skills/engineering/research",
+      "publishedHash": "d293faf4e4da791b8046cd2eed5b4dce46f591f1a26be4099a55b968b5dbe9c9",
+      "publishedVersion": "1.2.3+r1"
+    },
+    "mp-retro": {
+      "hash": "e13af4f6dfecd777815adde57811398dc59d0118692a70d996968b59e3d13db8",
+      "version": "1.3.1+r1",
+      "changed": false,
+      "category": "engineering",
+      "dir": "retro",
+      "upstreamPath": "skills/engineering/retro",
+      "publishedHash": "e13af4f6dfecd777815adde57811398dc59d0118692a70d996968b59e3d13db8",
+      "publishedVersion": "1.3.1+r1"
+    },
+    "mp-setup-matt-pocock-skills": {
+      "hash": "f1442885e269d489b91b2a289e4619a0385eb3503121ea1f92769268bf08c123",
+      "version": "1.3.1+r2",
+      "changed": false,
+      "category": "engineering",
+      "dir": "setup-matt-pocock-skills",
+      "upstreamPath": "skills/engineering/setup-matt-pocock-skills",
+      "publishedHash": "f1442885e269d489b91b2a289e4619a0385eb3503121ea1f92769268bf08c123",
+      "publishedVersion": "1.3.1+r2"
+    },
+    "mp-tdd": {
+      "hash": "ef3cbb31aa8b1f8a3f9b6a042c230dc9312019e84cdc6337f60890f177fd5764",
+      "version": "1.3.1+r2",
+      "changed": false,
+      "category": "engineering",
+      "dir": "tdd",
+      "upstreamPath": "skills/engineering/tdd",
+      "publishedHash": "ef3cbb31aa8b1f8a3f9b6a042c230dc9312019e84cdc6337f60890f177fd5764",
+      "publishedVersion": "1.3.1+r2"
+    },
+    "mp-to-spec": {
+      "hash": "cc5d718c2f810f4c9b081ea888af3ad3eb73bb8db6fc9fa92c3b1729637b7d56",
+      "version": "1.2.3+r1",
+      "changed": false,
+      "category": "engineering",
+      "dir": "to-spec",
+      "upstreamPath": "skills/engineering/to-spec",
+      "publishedHash": "cc5d718c2f810f4c9b081ea888af3ad3eb73bb8db6fc9fa92c3b1729637b7d56",
+      "publishedVersion": "1.2.3+r1"
+    },
+    "mp-to-tickets": {
+      "hash": "7cca8cd2afe55d1cd8bfc986df6a4cb4ad54411452575200804494b03c871ede",
+      "version": "1.3.1+r1",
+      "changed": false,
+      "category": "engineering",
+      "dir": "to-tickets",
+      "upstreamPath": "skills/engineering/to-tickets",
+      "publishedHash": "7cca8cd2afe55d1cd8bfc986df6a4cb4ad54411452575200804494b03c871ede",
+      "publishedVersion": "1.3.1+r1"
+    },
+    "mp-triage": {
+      "hash": "bf09f37fa24ab64324497772a25a1e0a9b22d06ccb238fefd0cfb12eee473c3d",
+      "version": "1.3.1+r1",
+      "changed": false,
+      "category": "engineering",
+      "dir": "triage",
+      "upstreamPath": "skills/engineering/triage",
+      "publishedHash": "bf09f37fa24ab64324497772a25a1e0a9b22d06ccb238fefd0cfb12eee473c3d",
+      "publishedVersion": "1.3.1+r1"
+    },
+    "mp-wayfinder": {
+      "hash": "d7224a1241800092e128af0544017b1a78f412c3fc26e810521f3674a1184c93",
+      "version": "1.3.1+r1",
+      "changed": false,
+      "category": "engineering",
+      "dir": "wayfinder",
+      "upstreamPath": "skills/engineering/wayfinder",
+      "publishedHash": "d7224a1241800092e128af0544017b1a78f412c3fc26e810521f3674a1184c93",
+      "publishedVersion": "1.3.1+r1"
+    },
+    "mp-wizard": {
+      "hash": "93fc955828a4d1086f8ac15c67d894d540db821b5eca0feca2e24d8856b784e3",
+      "version": "1.3.1+r1",
+      "changed": false,
+      "category": "engineering",
+      "dir": "wizard",
+      "upstreamPath": "skills/engineering/wizard",
+      "publishedHash": "93fc955828a4d1086f8ac15c67d894d540db821b5eca0feca2e24d8856b784e3",
+      "publishedVersion": "1.3.1+r1"
+    },
+    "mp-grill-me": {
+      "hash": "fe33aaa8e8dcd606107b1bfe3109f257b4a7e0f4907afd6506b62ccfb73cd1d3",
+      "version": "1.2.3+r1",
+      "changed": false,
+      "category": "productivity",
+      "dir": "grill-me",
+      "upstreamPath": "skills/productivity/grill-me",
+      "publishedHash": "fe33aaa8e8dcd606107b1bfe3109f257b4a7e0f4907afd6506b62ccfb73cd1d3",
+      "publishedVersion": "1.2.3+r1"
+    },
+    "mp-grilling": {
+      "hash": "90b54c72a48114f62072de27e1bef0c61d55f0959044725c593ed9fc72197755",
+      "version": "1.3.1+r1",
+      "changed": false,
+      "category": "productivity",
+      "dir": "grilling",
+      "upstreamPath": "skills/productivity/grilling",
+      "publishedHash": "90b54c72a48114f62072de27e1bef0c61d55f0959044725c593ed9fc72197755",
+      "publishedVersion": "1.3.1+r1"
+    },
+    "mp-handoff": {
+      "hash": "16e5b77eadb689d69c816bfe52cae6b5f425180340b77235ab8a3f402cf4b6f3",
+      "version": "1.3.1+r1",
+      "changed": false,
+      "category": "productivity",
+      "dir": "handoff",
+      "upstreamPath": "skills/productivity/handoff",
+      "publishedHash": "16e5b77eadb689d69c816bfe52cae6b5f425180340b77235ab8a3f402cf4b6f3",
+      "publishedVersion": "1.3.1+r1"
+    },
+    "mp-teach": {
+      "hash": "7bd8a41095f71c5e76892427f1db17eaa744372611b748db50a93dfa25fc62ca",
+      "version": "1.3.1+r1",
+      "changed": false,
+      "category": "productivity",
+      "dir": "teach",
+      "upstreamPath": "skills/productivity/teach",
+      "publishedHash": "7bd8a41095f71c5e76892427f1db17eaa744372611b748db50a93dfa25fc62ca",
+      "publishedVersion": "1.3.1+r1"
+    },
+    "mp-to-questionnaire": {
+      "hash": "619879fbd0e99ffacb9ae4a23a8c44393a37cb6d90b59a5ce8f5ace1be5baae0",
+      "version": "1.2.3+r1",
+      "changed": false,
+      "category": "productivity",
+      "dir": "to-questionnaire",
+      "upstreamPath": "skills/productivity/to-questionnaire",
+      "publishedHash": "619879fbd0e99ffacb9ae4a23a8c44393a37cb6d90b59a5ce8f5ace1be5baae0",
+      "publishedVersion": "1.2.3+r1"
+    },
+    "mp-wait-what": {
+      "hash": "aeda379d44a811ede92435e0af812ba599c3f3fb617c208a7ed3d0226072ba8d",
+      "version": "1.3.1+r1",
+      "changed": false,
+      "category": "productivity",
+      "dir": "wait-what",
+      "upstreamPath": "skills/productivity/wait-what",
+      "publishedHash": "aeda379d44a811ede92435e0af812ba599c3f3fb617c208a7ed3d0226072ba8d",
+      "publishedVersion": "1.3.1+r1"
+    },
+    "mp-writing-for-agents": {
+      "hash": "8365ebe1d0c343d3d46970526f30fcf7c5e0c5e49fd39a3c882977024626ff3c",
+      "version": "1.2.3+r1",
+      "changed": false,
+      "category": "productivity",
+      "dir": "writing-for-agents",
+      "upstreamPath": "skills/productivity/writing-for-agents",
+      "publishedHash": "8365ebe1d0c343d3d46970526f30fcf7c5e0c5e49fd39a3c882977024626ff3c",
+      "publishedVersion": "1.2.3+r1"
+    },
+    "mp-git-guardrails-claude-code": {
+      "hash": "92c1c7a61a0edc6c3c6a35e5301da9f422c2226a6f15ce9215cc9b4bba2b098e",
+      "version": "1.2.3+r1",
+      "changed": false,
+      "category": "misc",
+      "dir": "git-guardrails-claude-code",
+      "upstreamPath": "skills/misc/git-guardrails-claude-code",
+      "publishedHash": "92c1c7a61a0edc6c3c6a35e5301da9f422c2226a6f15ce9215cc9b4bba2b098e",
+      "publishedVersion": "1.2.3+r1"
+    },
+    "mp-migrate-to-shoehorn": {
+      "hash": "be9b2a0f6e0cd5186997e1eee2b92a7b9ed5e98f9f4b6b19a05edc67542f7f06",
+      "version": "1.2.3+r1",
+      "changed": false,
+      "category": "misc",
+      "dir": "migrate-to-shoehorn",
+      "upstreamPath": "skills/misc/migrate-to-shoehorn",
+      "publishedHash": "be9b2a0f6e0cd5186997e1eee2b92a7b9ed5e98f9f4b6b19a05edc67542f7f06",
+      "publishedVersion": "1.2.3+r1"
+    },
+    "mp-scaffold-exercises": {
+      "hash": "aa52a864ead89a2c03a84b0a74a899599f1d6fd5efc0af51ff31a30d667fa9f8",
+      "version": "1.2.3+r1",
+      "changed": false,
+      "category": "misc",
+      "dir": "scaffold-exercises",
+      "upstreamPath": "skills/misc/scaffold-exercises",
+      "publishedHash": "aa52a864ead89a2c03a84b0a74a899599f1d6fd5efc0af51ff31a30d667fa9f8",
+      "publishedVersion": "1.2.3+r1"
+    },
+    "mp-setup-pre-commit": {
+      "hash": "b7455a91310ae0aa9b02b2642533fe60f17a1443d45bc0b455cc3136f2d85c8b",
+      "version": "1.2.3+r1",
+      "changed": false,
+      "category": "misc",
+      "dir": "setup-pre-commit",
+      "upstreamPath": "skills/misc/setup-pre-commit",
+      "publishedHash": "b7455a91310ae0aa9b02b2642533fe60f17a1443d45bc0b455cc3136f2d85c8b",
+      "publishedVersion": "1.2.3+r1"
+    }
+  }
+}
